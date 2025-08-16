@@ -94,8 +94,7 @@ void ComboCounter::onTick(TickEvent &event) {
 
     std::chrono::duration<double> duration = std::chrono::high_resolution_clock::now() - last_hit;
     if (duration.count() >= 15) Combo = 0;
-
-
+}
 
 void ComboCounter::onRender(RenderEvent &event) {
     if (this->isEnabled()) {
