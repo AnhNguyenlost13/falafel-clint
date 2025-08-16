@@ -8,6 +8,7 @@
 class ComboCounter : public Module {
 private:
 	int Combo = 0;
+	int lastHurtTime;
 	std::chrono::time_point<std::chrono::high_resolution_clock> last_hit;
 public:
 
