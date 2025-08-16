@@ -52,7 +52,7 @@ void ComboCounter::settingsRender(float settingsOffset) {
 
     addHeader("Misc");
     defaultAddSettings("misc");
-    addToggle("Count to Negatives", "Allows the count to keep going down", "negatives")
+    addToggle("Count to Negatives", "Allows the count to keep going down", "negatives");
 
     FlarialGUI::UnsetScrollView();
 
