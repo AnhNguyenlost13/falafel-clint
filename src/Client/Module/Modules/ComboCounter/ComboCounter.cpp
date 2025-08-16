@@ -20,8 +20,8 @@ void ComboCounter::onDisable() {
 
 void ComboCounter::defaultConfig() {
     setDef("text", (std::string)"Combo: {value}");
-    Module::defaultConfig("core");
-    setDef("negatives", false);
+    Module::defaultConfig("all");
+    
 }
 
 void ComboCounter::settingsRender(float settingsOffset) {
@@ -52,7 +52,6 @@ void ComboCounter::settingsRender(float settingsOffset) {
 
     addHeader("Misc");
     defaultAddSettings("misc");
-    addToggle("Count to Negatives", "Allows the count to keep going down", "negatives");
 
     FlarialGUI::UnsetScrollView();
 
@@ -66,7 +65,11 @@ void ComboCounter::onAttack(AttackEvent &event) {
     auto now = std::chrono::high_resolution_clock::now();
 
     if (Combo < 0) {
-        if (!getOps<bool>("negatives")) Combo = 0;
+        if (!getOps<bool>("negatives")) {
+            Combo = 0;
+            last_hit = now;
+            return;
+        }
         Combo++;
         last_hit = now;
         return;
@@ -86,9 +89,17 @@ void ComboCounter::onTick(TickEvent &event) {
     auto LP = reinterpret_cast<LocalPlayer*>(event.getActor());
 
     int currentHurtTime = LP->getHurtTime();
+
+    if (!getOps<bool>("negatives") && Combo < 0) {
+        Combo = 0;
+    }
+
     if (currentHurtTime > 0 && lastHurtTime == 0) {
-        if (getOps<bool>("negatives")) Combo--;
-        else Combo = 0;
+        if (negatives) {
+            Combo--;
+        } else {
+            Combo = 0;
+        }
     }
     lastHurtTime = currentHurtTime;
 
