@@ -61,7 +61,6 @@ void ComboCounter::settingsRender(float settingsOffset) {
 
 void ComboCounter::onAttack(AttackEvent &event) {
     if (!this->isEnabled()) return;
-    if (Combo < 0) Combo = 0;
     if (std::chrono::high_resolution_clock::now() - last_hit > std::chrono::milliseconds(480)) {
         Combo++;
         last_hit = std::chrono::high_resolution_clock::now();
@@ -74,13 +73,11 @@ void ComboCounter::onTick(TickEvent &event) {
         return;
 
     auto LP = reinterpret_cast<LocalPlayer*>(event.getActor());
-    lastHurtTime = 0;
+
 
     int currentHurtTime = LP->getHurtTime();
-    if (currentHurtTime != 0) {
-        if (currentHurtTime > lastHurtTime) {
-            Combo--;
-        }
+    if (currentHurtTime > 0 && lastHurtTime == 0) {
+        Combo--;
     }
     lastHurtTime = currentHurtTime;
 
