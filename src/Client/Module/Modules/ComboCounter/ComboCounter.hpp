@@ -9,6 +9,7 @@ class ComboCounter : public Module {
 private:
 	int Combo = 0;
 	std::chrono::time_point<std::chrono::high_resolution_clock> last_hit;
+	int lastHurtTime;
 public:
 
 	ComboCounter() : Module("Combo", "Keeps track of consecutive hits.", IDR_COMBO_PNG, "") {
