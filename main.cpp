@@ -213,7 +213,5 @@ BOOL APIENTRY DllMain(HMODULE instance, DWORD ul_reason_for_call, LPVOID lpReser
         Client::currentModule = instance;
         CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)init, instance, 0, nullptr));
     }
-
     return TRUE;
-    
 }
