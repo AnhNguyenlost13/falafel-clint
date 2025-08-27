@@ -52,6 +52,8 @@ jobs:
               echo "should_build=false" >> "$GITHUB_OUTPUT"
           fi
 
+          echo "should_build=true" >> "$GITHUB_OUTPUT"
+          echo "type=2" >> "$GITHUB_OUTPUT"
   windows-build:
     runs-on: windows-latest
     needs: check-commit
