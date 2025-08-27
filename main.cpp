@@ -196,7 +196,6 @@ DWORD WINAPI init() {
     FreeLibraryAndExitThread(Client::currentModule, 0);
 }
 
-
 BOOL APIENTRY DllMain(HMODULE instance, DWORD ul_reason_for_call, LPVOID lpReserved) {
     if (ul_reason_for_call == DLL_PROCESS_ATTACH) {
         /*
