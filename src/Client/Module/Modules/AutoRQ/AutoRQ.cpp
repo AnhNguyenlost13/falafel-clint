@@ -374,5 +374,5 @@ void AutoRQ::onKey(KeyEvent& event)
 {
     if (!this->isEnabled()) return;
     if (event.getKey() == Utils::getStringAsKey(getOps<std::string>("bind")) &&
-        static_cast<ActionType>(event.getAction()) == ActionType::Released) reQ();
+        static_cast<ActionType>(event.getAction()) == ActionType::Pressed) reQ();
 }
