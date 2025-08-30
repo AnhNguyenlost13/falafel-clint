@@ -27,5 +27,7 @@ public:
 	void onPacketReceive(PacketEvent& event);
 
 	void reQ();
+
+	void onKey(KeyEvent& event);
 };
 
