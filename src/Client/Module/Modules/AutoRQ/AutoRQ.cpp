@@ -39,11 +39,21 @@ void AutoRQ::defaultConfig() {
     setDef("noteaming", false);
     setDef("friendaccept", false);
     setDef("partyaccept", false);
+    setDef("bind", (std::string) "R");
     
 }
 
 void AutoRQ::settingsRender(float settingsOffset) {
-    initSettingsPage();
+    float x = Constraints::PercentageConstraint(0.019, "left");
+    float y = Constraints::PercentageConstraint(0.10, "top");
+
+    const float scrollviewWidth = Constraints::RelativeConstraint(0.5, "height", true);
+
+
+    FlarialGUI::ScrollBar(x, y, 140, Constraints::SpacingConstraint(5.5, scrollviewWidth), 2);
+    FlarialGUI::SetScrollView(x - settingsOffset, Constraints::PercentageConstraint(0.00, "top"),
+                              Constraints::RelativeConstraint(1.0, "width"),
+                              Constraints::RelativeConstraint(0.88f, "height"));
     addHeader("General");
     addToggle("Use /hub instead of /q", "", "hub");
     // this->addDropdown("Command to use", "Command to execute when somthing gets triggered",  std::vector<std::string>{"Re-Q same game", "Q a Random game", "Go back to the hub"}, getOps<std::string>("commandtouse"));
@@ -52,6 +62,7 @@ void AutoRQ::settingsRender(float settingsOffset) {
     addToggle("Auto re-queue ", "Find a new game when the current game is over", "ReQ");
     addToggle("Solo mode ", "Re-Q when you finish a game or die and can't respawn.\nNot recomended while in a party.", "solo");
     addToggle("Team Elimination", "Re-Q when the team your on is fully ELIMINATED.", "eliminated");
+    addKeybind("Requeue Keybind", "When setting, hold the new bind for 2 seconds :3", "bind", true);
 
     addHeader("Map avoider");
 
@@ -64,9 +75,6 @@ void AutoRQ::settingsRender(float settingsOffset) {
 
         // this->settings.addSetting(keybindName, (std::string)"");
         this->settings.addSetting(commandName, (std::string)"");
-
-
-        int i = totalmaps;
 
         Client::SaveSettings();
         FlarialGUI::Notify("New textbox created, input a map to avoid!");
@@ -360,4 +368,11 @@ void AutoRQ::reQ() {
 
         SDK::clientInstance->getPacketSender()->sendToServer(command_packet);
     }
+}
+
+void AutoRQ::onKey(KeyEvent& event)
+{
+    if (!this->isEnabled()) return;
+    if (event.getKey() == Utils::getStringAsKey(getOps<std::string>("bind")) &&
+        static_cast<ActionType>(event.getAction()) == ActionType::Released) reQ();
 }
