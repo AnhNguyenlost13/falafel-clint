@@ -345,7 +345,7 @@ void AutoRQ::onPacketReceive(PacketEvent &event) {
 
 void AutoRQ::reQ() {
     std::string gm = HiveModeCatcherListener::fullgamemodename;
-    if (!this->isEnabled() or gm.empty()) return;
+    if (!this->isEnabled() or gm.empty() or gm.find("Hub") != std::string::npos) return;
     if (!getOps<bool>("hub")) {
         FlarialGUI::Notify("Finding a new game of " + gm);
 
@@ -376,8 +376,5 @@ void AutoRQ::reQ() {
 void AutoRQ::meow(KeyEvent& event)
 {
     if (!this->isEnabled()) return;
-    if (event.getKey() == Utils::getStringAsKey(getOps<std::string>("bind")) && static_cast<ActionType>(event.getAction()) == ActionType::Pressed) {
-        reQ();
-        FlarialGUI::Notify("Trying to requeue now");
-    }
+    if (event.getKey() == Utils::getStringAsKey(getOps<std::string>("bind")) && static_cast<ActionType>(event.getAction()) == ActionType::Pressed) reQ();
 }
