@@ -344,9 +344,10 @@ void AutoRQ::onPacketReceive(PacketEvent &event) {
 }
 
 void AutoRQ::reQ() {
-    if (!this->isEnabled()) return;
+    std::string gm = HiveModeCatcherListener::fullgamemodename;
+    if (!this->isEnabled() or gm.empty()) return;
     if (!getOps<bool>("hub")) {
-        FlarialGUI::Notify("Finding a new game of " + HiveModeCatcherListener::fullgamemodename);
+        FlarialGUI::Notify("Finding a new game of " + gm);
 
         std::shared_ptr<Packet> packet = SDK::createPacket(77);
         auto* command_packet = reinterpret_cast<CommandRequestPacket*>(packet.get());
