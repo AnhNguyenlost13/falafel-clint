@@ -28,6 +28,6 @@ public:
 
 	void reQ();
 
-	void onKey(KeyEvent& event);
+	void meow(KeyEvent& event);
 };
 
