@@ -4,12 +4,14 @@
 #include "SDK/Client/Network/Packet/SetTitlePacket.hpp"
 
 void AutoRQ::onEnable() {
-    Listen(this, PacketEvent, &AutoRQ::onPacketReceive)
+    Listen(this, PacketEvent, &AutoRQ::onPacketReceive);
+    Listen(this, KeyEvent, &AutoRQ::meow);
     Module::onEnable();
 }
 
 void AutoRQ::onDisable() {
-    Deafen(this, PacketEvent, &AutoRQ::onPacketReceive)
+    Deafen(this, PacketEvent, &AutoRQ::onPacketReceive);
+    Deafen(this, KeyEvent, &AutoRQ::meow);
     Module::onDisable();
 }
 
@@ -370,7 +372,7 @@ void AutoRQ::reQ() {
     }
 }
 
-void AutoRQ::onKey(KeyEvent& event)
+void AutoRQ::meow(KeyEvent& event)
 {
     if (!this->isEnabled()) return;
     if (event.getKey() == Utils::getStringAsKey(getOps<std::string>("bind")) && static_cast<ActionType>(event.getAction()) == ActionType::Pressed) {
