@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(CLIENT_VERSION "2.00") # Update this for every new release
 
-# set(CLIENT_BUILD_TYPE "Release")
+set(CLIENT_BUILD_TYPE "Release")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CLIENT_BUILD_TYPE "Debug")
     add_compile_definitions(__DEBUG__)
