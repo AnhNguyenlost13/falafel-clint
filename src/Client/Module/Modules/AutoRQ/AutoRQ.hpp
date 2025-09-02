@@ -7,6 +7,7 @@
 class AutoRQ : public Module {
 private:
 	bool triggered = false;
+	int deaths = 0;
 	std::string teamcolor = "THIS IS NEEDED TRUST!!!!!!!!!!!!!!";
 	std::string Copy_CS = "THIS IS NEEDED EVEN MORE TRUST!!!!";
 public:
@@ -28,6 +29,5 @@ public:
 
 	void reQ();
 
-	void meow(KeyEvent& event);
+	void onKey(KeyEvent& event);
 };
-
