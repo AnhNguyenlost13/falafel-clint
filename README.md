@@ -33,6 +33,8 @@ If you encounter issues, check out our [FAQ](https://discord.gg/flarial-communit
 
 2. **Git**: Install Git if you haven't already. You can download Git from [git-scm.com](https://git-scm.com/downloads) and follow the installation instructions.
 
+3. **MSVC**: MSVC is required to build Flarial.
+
 ### Steps to Clone and Build the Project:
 
 1. **Clone the Repository**:
