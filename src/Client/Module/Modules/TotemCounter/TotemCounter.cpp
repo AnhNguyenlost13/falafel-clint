@@ -136,6 +136,9 @@ void TotemCounter::onPacketEvent(PacketEvent& event)
     auto actor = SDK::clientInstance->getLocalPlayer()->getLevel()->getRuntimeEntity(id, false);
     if (!actor) return Logger::debug("what the skibidi toilet");
 
+    const std::string baseName = Utils::sanitizeName(actor->getNametag() ? *actor->getNametag() : std::string("blahaj"));
+    const std::string playerName = (id == SDK::clientInstance->getLocalPlayer()->getRuntimeIDComponent()->runtimeID) ? std::string("You") : baseName;
+
     if (eep->EventID == ActorEvent::TalismanActivate)
     {
         // Workaround until I figure out how to properly filter packets.
@@ -147,13 +150,10 @@ void TotemCounter::onPacketEvent(PacketEvent& event)
 
         int pops = ++popsById[id];
 
-        const std::string baseName = Utils::sanitizeName(actor->getNametag() ? *actor->getNametag() : std::string("blahaj"));
-        const std::string name = (id == SDK::clientInstance->getLocalPlayer()->getRuntimeIDComponent()->runtimeID) ? std::string("You") : baseName;
-
-        SDK::clientInstance->getGuiData()->displayClientMessage("[§cTotem Counter§r] " + name +  " popped §7" + std::to_string(pops) + "§r totem" + (pops > 1 ? "s" : "") + ".");
+        SDK::clientInstance->getGuiData()->displayClientMessage("[§cTotem Counter§r] " + playerName +  " popped §7" + std::to_string(pops) + "§r totem" + (pops > 1 ? "s" : "") + ".");
     } else if (eep->EventID == ActorEvent::Death)
     {
-        SDK::clientInstance->getGuiData()->displayClientMessage(name + " died after popping " + std::to_string(popsById[id]) + " totems.");
+        SDK::clientInstance->getGuiData()->displayClientMessage("[§cTotem Counter§r] " + playerName + " died after popping §7" + std::to_string(popsById[id]) + "§r totems.");
         popsById[id] = 0;
     }
 }
